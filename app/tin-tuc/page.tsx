@@ -77,7 +77,7 @@ export default async function TinTucPage({
                   </div>
                   <div className="p-6 md:p-8">
                     <div className="flex items-center gap-2 text-xs text-slate-500 mb-3 font-medium">
-                      <span>{new Date(featuredArticle.publishedAt || Date.now()).toLocaleDateString("vi-VN")}</span>
+                      <span>{new Date((featuredArticle as any).publishedAt || Date.now()).toLocaleDateString("vi-VN")}</span>
                       <span>•</span>
                       <span className="text-vnpt">{getSourceById(featuredArticle.sourceId)?.name}</span>
                     </div>
@@ -132,7 +132,7 @@ export default async function TinTucPage({
                     <Link href={`/tin-tuc/${a.slug}`} className="text-sm font-bold text-slate-700 leading-tight group-hover:text-vnpt transition-colors line-clamp-2">
                       {a.title}
                     </Link>
-                    <div className="text-xs text-slate-400 mt-1">{new Date(a.publishedAt || Date.now()).toLocaleDateString("vi-VN")}</div>
+                    <div className="text-xs text-slate-400 mt-1">{new Date((a as any).publishedAt || Date.now()).toLocaleDateString("vi-VN")}</div>
                   </div>
                 </li>
               ))}
