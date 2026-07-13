@@ -72,7 +72,7 @@ export default function ProductTabs({ product }: { product: Product }) {
               {product.pricing.map((t, i) => (
                 <div key={i} className="border border-slate-200 rounded-xl overflow-hidden">
                   <div className="bg-slate-50 border-b border-slate-200 px-5 py-3">
-                    <h4 className="font-bold text-slate-800">{t.tableName || `Bảng giá ${i + 1}`}</h4>
+                    <h4 className="font-bold text-slate-800">{(t as any).tableName || `Bảng giá ${i + 1}`}</h4>
                   </div>
                   <PricingTable table={t} />
                 </div>
