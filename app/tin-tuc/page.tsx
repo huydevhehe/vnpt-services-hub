@@ -67,9 +67,9 @@ export default async function TinTucPage({
               {featuredArticle && !activeSource && (
                 <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 group">
                   <div className="aspect-[2/1] relative overflow-hidden">
-                    {featuredArticle.imageUrl ? (
+                    {featuredArticle.images && featuredArticle.images.length > 0 ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={featuredArticle.imageUrl} alt={featuredArticle.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                      <img src={featuredArticle.images[0]} alt={featuredArticle.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                     ) : (
                       <div className="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">Không có ảnh</div>
                     )}
@@ -84,7 +84,7 @@ export default async function TinTucPage({
                     <Link href={`/tin-tuc/${featuredArticle.slug}`}>
                       <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4 hover:text-vnpt transition-colors">{featuredArticle.title}</h2>
                     </Link>
-                    <p className="text-slate-600 mb-6 line-clamp-3">{featuredArticle.excerpt}</p>
+                    <p className="text-slate-600 mb-6 line-clamp-3">{featuredArticle.bodyText ? featuredArticle.bodyText.slice(0, 150) : ""}</p>
                     <Link href={`/tin-tuc/${featuredArticle.slug}`} className="inline-block text-vnpt font-bold border-b-2 border-vnpt pb-1 hover:text-vnpt-dark hover:border-vnpt-dark transition-colors">
                       Đọc tiếp &rarr;
                     </Link>

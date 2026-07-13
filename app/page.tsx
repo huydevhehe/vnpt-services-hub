@@ -128,9 +128,9 @@ export default function HomePage() {
                   HOT
                 </div>
                 <div className="aspect-[16/10] bg-slate-50 relative p-4 flex items-center justify-center overflow-hidden border-b border-slate-100">
-                  {p.imageUrl ? (
+                  {p.images && p.images.length > 0 ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={p.imageUrl} alt={p.name} className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" />
+                    <img src={p.images[0]} alt={p.title} className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" />
                   ) : (
                     <div className="w-16 h-16 rounded-2xl bg-vnpt/10 flex items-center justify-center text-vnpt">
                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
@@ -142,10 +142,10 @@ export default function HomePage() {
                   <h3 className="font-bold text-slate-900 text-lg mb-2 line-clamp-2 leading-tight group-hover:text-vnpt transition-colors">
                     <Link href={`/san-pham/${p.slug}`} className="focus:outline-none">
                       <span className="absolute inset-0" aria-hidden="true" />
-                      {p.name}
+                      {p.title}
                     </Link>
                   </h3>
-                  <p className="text-sm text-slate-500 line-clamp-2 mb-4 flex-1">{p.description}</p>
+                  <p className="text-sm text-slate-500 line-clamp-2 mb-4 flex-1">{p.shortDesc}</p>
                   <div className="text-vnpt-accent font-bold text-lg">Liên hệ tư vấn</div>
                 </div>
               </div>
