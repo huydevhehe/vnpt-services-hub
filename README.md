@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VNPT Data Explorer
 
-## Getting Started
+Công cụ **cào dữ liệu từ các website VNPT** và **dựng website xem/phân tích** (Next.js).
+Dữ liệu được chuẩn hoá về một nơi, mỗi mục **giữ nguyên nguồn gốc** (badge nguồn + link về trang gốc).
 
-First, run the development server:
+## Nguồn dữ liệu (6 website)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+| Nguồn | URL | Nội dung |
+|-------|-----|----------|
+| VNPT MetroNet | vnpt.vn | Bảng giá truyền số liệu / kênh thuê riêng |
+| VNPT DigiShop | digishop.vnpt.vn | Bài tư vấn, khuyến mãi, gói cước (MyTV, Internet) |
+| VNPT Cloud | cloud.vnpt.vn | ~30 dịch vụ cloud (Compute, DB, Storage, AI, Security) |
+| oneSME | onesme.vn | Nền tảng chuyển đổi số SME (SPA – cào bằng Playwright) |
+| VNPT IT | vnptit.vn | Giải pháp Chính phủ số, DN, Giáo dục, Y tế, Bảo mật |
+| VNPT Technology | vnpt-technology.vn | Thiết bị: ONT, Mesh WiFi, Camera, SmartBox, 5G + tin tức |
+
+## Kiến trúc
+
+```
+scripts/scrape/     # Scraper (Node/TypeScript)
+  lib/              # http, html, extract, crawl, site, build, images, save
+  sources/          # 1 module / nguồn
+  index.ts          # điều phối
+data/               # đầu ra: <nguồn>.json + index.json
+public/scraped-images/   # ảnh tải về (dùng offline)
+lib/data.ts         # web đọc & truy vấn JSON
+app/                # trang Next.js (App Router)
+components/         # Header, Footer, ProductCard, ArticleCard, PricingTable, SourceBadge, ScrapedBody
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Chạy
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npx playwright install chromium   # 1 lần, cho nguồn oneSME (SPA)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 1) Cào dữ liệu (đã có sẵn trong data/, chạy lại khi cần cập nhật)
+npm run scrape                    # cào tất cả 6 nguồn
+npm run scrape:one cloud          # chỉ cào 1 nguồn
 
-## Learn More
+# 2) Chạy web để xem
+npm run dev                       # mở http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Trang
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `/` — Trang chủ: thống kê + 6 nguồn + sản phẩm nổi bật + tin mới.
+- `/nguon` — Danh sách nguồn dữ liệu (link trang gốc, số liệu).
+- `/san-pham` — Catalog gộp, lọc theo **nguồn** & **danh mục**.
+- `/san-pham/[slug]` — Chi tiết: mô tả, tính năng, **bảng giá**, ảnh, link nguồn gốc.
+- `/tin-tuc`, `/tin-tuc/[slug]` — Tin tức & bài viết.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Ghi chú
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Cào **lịch sự**: mỗi request cách nhau ≥ 1s, User-Agent rõ ràng, giới hạn số trang/nguồn.
+- Dữ liệu thuộc về các đơn vị VNPT tương ứng; trang này chỉ để **xem & phân tích nội bộ**.
+- Muốn cào sâu/thêm trang: chỉnh `maxProducts`/`maxArticles` và bộ lọc link trong `scripts/scrape/sources/*`.

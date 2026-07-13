@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Tài liệu & prompt nội bộ — KHÔNG đẩy lên git
+*.md
+!README.md
+*.docx
+~$*.docx        # file khoá tạm của Word
+bien_ban_hop.txt

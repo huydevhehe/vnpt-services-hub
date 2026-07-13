@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
+@theme {
+  --color-vnpt: #005baa;
+  --color-vnpt-dark: #00468c;
+  --color-vnpt-darker: #002f5e;
+  --color-vnpt-light: #eef4fa;
+  --color-vnpt-accent: #f26522;
+}
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0B1220;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Nội dung thân bài đã cào: xuống dòng theo đoạn, tiêu đề phụ (## ...) tô đậm. */
+.scraped-body {
+  white-space: pre-line;
+  line-height: 1.75;
+}
+
+/* Tùy chỉnh thanh cuộn cho đẹp */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
