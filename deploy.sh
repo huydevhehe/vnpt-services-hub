@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# Deploy script cho VNPT Nam Sai Gon (Next.js) tren port 3004.
+# Deploy script cho VNPT Nam Sai Gon (Next.js).
+# Chay o port noi bo 3005 - Nginx dung o cong cong khai 3004 tro vao day.
 # Cach dung: ./deploy.sh
 set -e
 
-PORT=3004
+PORT=3005
 LOG_FILE="deploy.log"
 
 echo "==> Stopping process on port $PORT (if any)"
