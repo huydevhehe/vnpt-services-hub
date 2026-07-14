@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Article } from "@/lib/types";
 import SourceBadge from "./SourceBadge";
+import ArticleThumb from "./ArticleThumb";
 
 export default function ArticleCard({ article }: { article: Article }) {
   const img = article.images[0];
@@ -10,20 +11,8 @@ export default function ArticleCard({ article }: { article: Article }) {
       href={`/tin-tuc/${article.slug}`}
       className="group flex gap-4 rounded-xl border border-slate-200 bg-white p-3 transition-all hover:shadow-md hover:border-vnpt/40"
     >
-      <div className="h-24 w-32 shrink-0 overflow-hidden rounded-lg bg-vnpt-light">
-        {img ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={img}
-            alt={article.title}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-          />
-        ) : (
-          <div className="grid h-full place-items-center text-vnpt/40 text-xl font-black">
-            TIN
-          </div>
-        )}
+      <div className="h-24 w-32 shrink-0 overflow-hidden rounded-lg">
+        <ArticleThumb src={img} alt={article.title} />
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">

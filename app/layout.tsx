@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Be_Vietnam_Pro } from "next/font/google";
+import { Montserrat, Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import FloatingContact from "@/components/FloatingContact";
+import Shell from "@/components/Shell";
 
-const jakarta = Plus_Jakarta_Sans({
+const montserrat = Montserrat({
+  weight: ["500", "600", "700", "800"],
   subsets: ["vietnamese", "latin"],
-  variable: "--font-jakarta",
+  variable: "--font-montserrat",
 });
 
 const beVN = Be_Vietnam_Pro({
@@ -25,12 +24,9 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="vi" className={`${jakarta.variable} ${beVN.variable} h-full antialiased`}>
+    <html lang="vi" className={`${montserrat.variable} ${beVN.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans bg-slate-50 text-slate-800">
-        <Header />
-        <main className="flex-1 bg-white">{children}</main>
-        <Footer />
-        <FloatingContact />
+        <Shell>{children}</Shell>
       </body>
     </html>
   );

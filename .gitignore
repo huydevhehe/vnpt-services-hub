@@ -46,3 +46,6 @@ next-env.d.ts
 *.docx
 ~$*.docx        # file khoá tạm của Word
 bien_ban_hop.txt
+
+# Dự án Nexvio clone từ Lovable (repo riêng, không track trong repo VNPT)
+/nexvio-showcase/

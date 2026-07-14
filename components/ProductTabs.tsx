@@ -1,8 +1,46 @@
 'use client';
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import ScrapedBody from "./ScrapedBody";
 import PricingTable from "./PricingTable";
 import { Product } from "@/lib/types";
+
+/** Khối nội dung dài: thu gọn ~520px + nút "Xem thêm" (chỉ hiện khi thực sự tràn). */
+function Collapsible({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [overflow, setOverflow] = useState(false);
+  const MAX = 520;
+
+  useEffect(() => {
+    if (ref.current) setOverflow(ref.current.scrollHeight > MAX + 40);
+  }, [children]);
+
+  return (
+    <div>
+      <div
+        ref={ref}
+        className="relative overflow-hidden transition-all duration-300"
+        style={{ maxHeight: open || !overflow ? "none" : MAX }}
+      >
+        {children}
+        {overflow && !open && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent" />
+        )}
+      </div>
+      {overflow && (
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="mt-4 inline-flex items-center gap-1.5 rounded-lg border border-vnpt/20 bg-vnpt-light px-4 py-2 text-sm font-bold text-vnpt transition-colors hover:bg-vnpt hover:text-white"
+        >
+          {open ? "Thu gọn" : "Xem thêm nội dung"}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform ${open ? "rotate-180" : ""}`}>
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+      )}
+    </div>
+  );
+}
 
 export default function ProductTabs({ product }: { product: Product }) {
   const [activeTab, setActiveTab] = useState("overview");
@@ -36,11 +74,27 @@ export default function ProductTabs({ product }: { product: Product }) {
       {/* Tabs Content */}
       <div className="p-6 md:p-8">
         {activeTab === "overview" && (
-          <div className="prose prose-slate max-w-none prose-headings:text-vnpt-darker prose-a:text-vnpt">
+          <div>
+            {product.shortDesc && (
+              <div className="mb-6 rounded-xl border-l-4 border-vnpt bg-vnpt-light/60 p-4 text-[15px] font-medium leading-relaxed text-slate-700">
+                {product.shortDesc}
+              </div>
+            )}
             {product.bodyText ? (
-              <ScrapedBody text={product.bodyText} />
+              <Collapsible>
+                <ScrapedBody text={product.bodyText} />
+              </Collapsible>
             ) : (
-              <p className="text-slate-500 italic">Nội dung chi tiết đang được cập nhật...</p>
+              <p className="italic text-slate-500">Nội dung chi tiết đang được cập nhật...</p>
+            )}
+            {product.pricing.length > 0 && (
+              <button
+                onClick={() => setActiveTab("pricing")}
+                className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-vnpt hover:underline"
+              >
+                Xem bảng giá chi tiết
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+              </button>
             )}
           </div>
         )}

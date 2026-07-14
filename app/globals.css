@@ -6,6 +6,8 @@
   --color-vnpt-darker: #002f5e;
   --color-vnpt-light: #eef4fa;
   --color-vnpt-accent: #f26522;
+  --font-sans: var(--font-be-vn), ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  --font-display: var(--font-montserrat), var(--font-be-vn), ui-sans-serif, sans-serif;
 }
 
 :root {
@@ -20,7 +22,13 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Tiêu đề dùng font hiển thị Montserrat cho ra dáng doanh nghiệp */
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
 }
 
 /* Nội dung thân bài đã cào: xuống dòng theo đoạn, tiêu đề phụ (## ...) tô đậm. */
